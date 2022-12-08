@@ -14,11 +14,22 @@ interface Product {
 })
 export class AppComponent {
   productsPerPage: number = 8;
-  products: Product[] = this.getProducts(this.productsPerPage);
+  products: Product[] = [];
 
-  getProducts(productsPerPage: number): Product[] {
+  ngOnInit() {
+    this.init();
+  }
+
+  init(): void {
+    this.products = this.getProducts();
+  }
+
+  getProducts(): Product[] {
+    const startIndex = this.products.length + 1;
+    const limit = this.productsPerPage + startIndex;
     let products = [];
-    for (let i = 1; i <= productsPerPage; i += 1) {
+
+    for (let i = startIndex; i <= limit; i += 1) {
       products.push({
         id: nanoid(),
         title: `Product #${i}`,
@@ -26,5 +37,9 @@ export class AppComponent {
       });
     }
     return products;
+  }
+
+  loadMoreProducts(): void {
+    this.products = [...this.products, ...this.getProducts()];
   }
 }
