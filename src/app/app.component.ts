@@ -17,10 +17,6 @@ export class AppComponent {
   products: Product[] = [];
 
   ngOnInit() {
-    this.init();
-  }
-
-  init(): void {
     this.products = this.getProducts();
   }
 
